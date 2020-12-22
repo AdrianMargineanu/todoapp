@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:core';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:todoapp/todo/model/todo.dart';
 
@@ -22,13 +21,14 @@ class ToDoService {
     new ToDo('Instalare Flutter', new DateTime(2020,12,1,10), 2),
     new ToDo('Familiarizat cu Dart', new DateTime(2020,12,1,10), 1),
   ];*/
+
   FirebaseFirestore _cloud = FirebaseFirestore.instance;
 
   ToDoService();
 
-  Future<void> editToDo(ToDo toDo, String docId) async{
-    final doc = await _cloud.collection('list_of_to_do').doc(docId);
-    doc.update( {
+  void editToDo(ToDo toDo, String docId) {
+    final doc = _cloud.collection('list_of_to_do').doc(docId);
+    doc.update({
       'title': toDo.title,
       'date': Timestamp.fromDate(toDo.date),
       'importance': toDo.importance,
@@ -38,28 +38,28 @@ class ToDoService {
   Future<List<ToDo>> getList() async {
     final listOfDocuments = await _cloud.collection('list_of_to_do').get();
     List<ToDo> list = [];
-    listOfDocuments.docs.map((e) =>
-        list.add(
-            new ToDo(e.data()['title'], e.data()['date'], e.data()['importance'])));
+    for (int i = 0; i < listOfDocuments.docs.length; i++) {
+      var e = listOfDocuments.docs[i];
+      list.add(
+          ToDo(e.data()['title'], e.data()['date'].toDate(), e.data()['importance'], docId: e.id));
+    }
+    print("getlist length = " + list.length.toString() + "\n");
     return list;
   }
 
   Future<void> addToDo(ToDo toDo) async {
-    DocumentReference ref = await _cloud.collection('list_of_to_do').add(
-     {
-       'title': toDo.title,
-       'date': Timestamp.fromDate(toDo.date),
-       'importance': toDo.importance,
-     }
-    );
-    toDo.docId =ref.id;
+    DocumentReference ref = await _cloud.collection('list_of_to_do').add({
+      'title': toDo.title,
+      'date': Timestamp.fromDate(toDo.date),
+      'importance': toDo.importance,
+    });
+    toDo.docId = ref.id;
   }
 
-  Future<void> deleteToDo(List<ToDo> list) async{
-    for(ToDo toDo in list) {
-      final doc = await _cloud.collection('list_of_to_do').doc(toDo.docId);
-      doc.delete();
+  Future<void> deleteToDo(List<ToDo> list) async {
+    for (ToDo toDo in list) {
+      final doc = _cloud.collection('list_of_to_do').doc(toDo.docId);
+      await doc.delete();
     }
   }
-
 }

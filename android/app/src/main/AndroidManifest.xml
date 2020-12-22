@@ -2,6 +2,7 @@
     package="com.example.todoapp">
    <application
         android:label="todoapp"
+        android:name="androidx.multidex.MultiDexApplication" >
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

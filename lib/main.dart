@@ -3,6 +3,7 @@ import 'package:todoapp/todo/view/todo_view.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MyApp());
 }
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Demo'),
+      home: MyHomePage(title: 'Welcome to your app'),
     );
   }
 }
@@ -75,7 +76,10 @@ class _MyHomePageState extends State<MyHomePage> {
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
         child: Text(
-          'Welcome to the home page',
+          'To Do App',
+          style: TextStyle(
+            fontSize: 25,
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
