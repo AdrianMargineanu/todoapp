@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 class ToDo {
   String title;
   DateTime date;
-  int importance;// 0, 1, 2
+  int importance;
   String docId;
   ToDo(this.title, this.date, this.importance, {this.docId});
 
@@ -14,8 +14,17 @@ class ToDo {
 
 
   static int compare(ToDo b, ToDo a) {
-    if (a.date.isBefore(b.date)) return 1;
-    else if (a.date.isAfter(b.date)) return -1;
-    return a.importance - b.importance;
+    if (a.date.day == b.date.day && a.date.month == b.date.month &&
+        a.date.year == b.date.year) {
+      return a.importance - b.importance;
+    } else {
+      if (a.date.month == b.date.month && a.date.year == b.date.year) {
+        return b.date.day - a.date.day;
+      }
+      if (a.date.year == b.date.year) {
+        return b.date.month - a.date.month;
+      }
+      return b.date.year - a.date.year;
+    }
   }
 }

@@ -16,9 +16,6 @@ class _ToDoViewState extends State<ToDoView> {
 
   @override
   void initState() {
-    // ToDoService.list.sort(ToDo.compare);
-    // allItemList = ToDoService.list.map((e) => e.toString()).toList();
-
     super.initState();
   }
 
@@ -104,7 +101,6 @@ class _ToDoViewState extends State<ToDoView> {
                                   for (String e in checkedItemList) {
                                     deleteItems.add(stringToInstance[e]);
                                   }
-                                  print(deleteItems[0].docId + "\n");
                                   await ToDoService().deleteToDo(deleteItems);
                                   checkedItemList.clear();
                                   setState(() {});

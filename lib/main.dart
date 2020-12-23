@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:todoapp/todo/view/todo_view.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MyApp());
@@ -53,7 +53,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  void _incrementCounter() {
+  void _navigateToNextPage() {
     Navigator.push(
         context, MaterialPageRoute(builder: (_) => ToDoView()));
   }
@@ -83,7 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter, // trece pe alta pagina
+        onPressed: _navigateToNextPage, // trece pe alta pagina
         tooltip: 'Next Page',
         child: Icon(Icons.arrow_forward),
       ), // This trailing comma makes auto-formatting nicer for build methods.
